@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tạo lịch trình Quy Nhơn – Phú Yên</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6fbfb;--card:#fff;--tx:#12303a;--mu:#5d7a84;--ac:#0e8fa3;--ac2:#f59e42;--bd:#d6e6ea;--soft:#e4f3f6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1b20;--card:#14282f;--tx:#e6f3f6;--mu:#8fb0ba;--ac:#3cc3d8;--ac2:#f7ab5f;--bd:#24424c;--soft:#1a3640}}
+:root[data-theme="dark"]{--bg:#0d1b20;--card:#14282f;--tx:#e6f3f6;--mu:#8fb0ba;--ac:#3cc3d8;--ac2:#f7ab5f;--bd:#24424c;--soft:#1a3640}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:28px 16px 18px;text-align:center;background:linear-gradient(135deg,var(--ac),#2a6fdb);color:#fff}
+header h1{margin:0 0 4px;font-size:clamp(22px,5vw,32px)}header p{margin:0;opacity:.9}
+main{max-width:1100px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:880px){main.b{grid-template-columns:380px 1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}
+h2{font-size:17px;margin:0 0 10px}h3{font-size:14px;margin:14px 0 6px;color:var(--mu)}
+label{display:block;font-size:13px;color:var(--mu);margin:8px 0 3px}
+input,select,button,textarea{font:inherit;color:var(--tx)}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg)}
+.row{display:flex;gap:8px}.row>*{flex:1}
+button{cursor:pointer;border:0;border-radius:8px;padding:9px 14px;background:var(--ac);color:#fff;font-weight:600}
+button.s{background:var(--soft);color:var(--tx)}button.o{background:var(--ac2);color:#2a1700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:999px;padding:5px 11px;font-weight:400;font-size:13px}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.chip small{opacity:.7}
+.day{margin-bottom:14px}
+.day h2{display:flex;justify-content:space-between;align-items:center;color:var(--ac)}
+.it{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:10px 0;border-top:1px dashed var(--bd)}
+.tm{font-weight:700;color:var(--ac2)}
+.it b{display:block}.it span{color:var(--mu);font-size:13px}
+.it select{width:auto;font-size:12px;padding:3px 6px;margin-top:4px}
+.it button.x{background:none;color:var(--mu);padding:2px 6px;font-weight:400;font-size:12px}
+.tr{background:var(--soft);border-radius:8px;padding:6px 10px;font-size:13px;margin:6px 0;color:var(--mu)}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:99px;background:var(--soft);color:var(--ac);margin-left:6px}
+.empty{color:var(--mu);text-align:center;padding:30px 10px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+#out{white-space:pre-wrap;width:100%;min-height:120px;margin-top:8px}
+@media print{header,.bar,.nop{display:none!important}main{display:block}.card{border:0}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<header><h1>🌊 Tạo lịch trình Quy Nhơn – Phú Yên</h1><p>Chọn địa điểm, tự chia ngày, chỉnh sửa và chia sẻ</p></header>
+<main id="m" class="b">
+<section class="card nop" id="builder">
+  <h2>1. Thông tin chuyến đi</h2>
+  <label>Tên chuyến đi</label><input id="ttl" value="Chuyến đi Quy Nhơn – Phú Yên">
+  <div class="row">
+    <div><label>Số ngày</label><select id="nd"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option></select></div>
+    <div><label>Nhịp độ</label><select id="pace"><option value="3">Thong thả (3 điểm/ngày)</option><option value="4" selected>Vừa phải (4 điểm/ngày)</option><option value="5">Dày đặc (5 điểm/ngày)</option></select></div>
+  </div>
+  <div class="row"><div><label>Ngày đi (tuỳ chọn)</label><input type="date" id="dt"></div></div>
+  <h2 style="margin-top:18px">2. Chọn địa điểm</h2>
+  <div class="row"><button class="s" id="mau">📅 Lịch mẫu 14 ngày</button><button class="s" id="pre">✨ Gợi ý sẵn</button><button class="s" id="clr">Xoá chọn</button></div>
+  <div id="pl"></div>
+  <h3>Thêm điểm của bạn</h3>
+  <div class="row"><input id="cn" placeholder="Tên điểm (VD: Cà phê A)"><select id="cs"><option value="1">Sáng</option><option value="2">Trưa</option><option value="3" selected>Chiều</option><option value="4">Tối</option></select></div>
+  <button class="s" id="ca" style="margin-top:6px;width:100%">+ Thêm</button>
+  <button id="gen" style="margin-top:14px;width:100%">3. Tạo lịch trình →</button>
+</section>
+<section>
+  <div class="bar nop">
+    <button class="s" id="tg">👁 Xem bản chia sẻ</button>
+    <button class="s" id="cp">📋 Sao chép văn bản</button>
+    <button class="s" id="pr">🖨 In / Lưu PDF</button>
+  </div>
+  <div class="card" id="view"></div>
+  <div class="card" id="stay" style="margin-top:16px"></div>
+  <textarea id="out" class="nop" hidden readonly></textarea>
+</section>
+</main>
+<script>
+// slot: 1 sáng, 2 trưa, 3 chiều, 4 tối. a: qn = Quy Nhơn, py = Phú Yên
+var P=[
+{id:'eg',n:'Eo Gió',a:'qn',s:1,d:90,o:1,t:'Check-in',x:'Vách đá, đường đi bộ ven biển, ngắm bình minh.'},
+{id:'kc',n:'Kỳ Co – Hòn Khô (đi cano)',a:'qn',s:1,d:300,o:2,t:'Biển',x:'Nước trong, lặn ngắm san hô; thường đi cano từ Nhơn Lý.'},
+{id:'gr',n:'Ghềnh Ráng – Mộ Hàn Mặc Tử',a:'qn',s:3,d:90,o:3,t:'Văn hoá',x:'Bãi tắm Hầu, bãi đá và nơi nhà thơ Hàn Mặc Tử yên nghỉ.'},
+{id:'td',n:'Tháp Đôi',a:'qn',s:3,d:60,o:4,t:'Văn hoá',x:'Cụm tháp Chăm cổ giữa phố.'},
+{id:'nh',n:'Tịnh xá Ngọc Hòa',a:'qn',s:3,d:60,o:5,t:'Tâm linh',x:'Tượng Phật lớn nhìn ra biển.'},
+{id:'bx',n:'Bánh xèo tôm nhảy',a:'qn',s:2,d:60,o:6,t:'Ăn uống',x:'Món đặc trưng Bình Định.'},
+{id:'bc',n:'Bún chả cá / bánh hỏi lòng heo',a:'qn',s:1,d:45,o:0,t:'Ăn uống',x:'Bữa sáng phổ biến.'},
+{id:'hs',n:'Hải sản bên bờ biển Quy Nhơn',a:'qn',s:4,d:90,o:7,t:'Ăn uống',x:'Ăn tối, dạo bãi biển sau đó.'},
+{id:'nc',n:'Nem chua, đặc sản mua về',a:'qn',s:3,d:45,o:8,t:'Mua sắm',x:'Mua quà trước khi rời Quy Nhơn.'},
+{id:'bs',n:'Bãi Xép (Phú Yên)',a:'py',s:1,d:90,o:10,t:'Check-in',x:'Bãi biển hoang sơ, nổi tiếng nhờ phim.'},
+{id:'gd',n:'Gành Đá Đĩa',a:'py',s:1,d:90,o:11,t:'Thiên nhiên',x:'Những cột đá bazan xếp như đĩa.'},
+{id:'md',n:'Mũi Điện (Đại Lãnh)',a:'py',s:3,d:120,o:12,t:'Check-in',x:'Điểm cực Đông, ngắm hoàng hôn/bình minh.'},
+{id:'ol',n:'Đầm Ô Loan',a:'py',s:3,d:90,o:13,t:'Thiên nhiên',x:'Đầm nước lợ, ăn sò huyết.'},
+{id:'tn',n:'Tháp Nhạn',a:'py',s:3,d:60,o:14,t:'Văn hoá',x:'Tháp Chăm nhìn xuống Tuy Hòa.'},
+{id:'mc',n:'Nhà thờ Mằng Lăng',a:'py',s:3,d:45,o:15,t:'Văn hoá',x:'Nhà thờ cổ hơn 100 năm.'},
+{id:'vr',n:'Vịnh Vũng Rô',a:'py',s:1,d:90,o:16,t:'Biển',x:'Vịnh yên bình, hải sản tươi.'},
+{id:'mcn',n:'Mắt cá ngừ đại dương',a:'py',s:2,d:60,o:17,t:'Ăn uống',x:'Đặc sản Phú Yên.'},
+{id:'bch',n:'Bánh canh hẹ',a:'py',s:1,d:45,o:9,t:'Ăn uống',x:'Món sáng đặc trưng Tuy Hòa.'},
+{id:'qt',n:'Bảo tàng Quang Trung (Tây Sơn)',a:'qn',s:1,d:120,o:1.5,t:'Văn hoá',x:'Bảo tàng và khu di tích Tây Sơn, cách Quy Nhơn khoảng 40–50 km.'},
+{id:'cf',n:'Cà phê view biển',a:'qn',s:3,d:90,o:9,t:'Chill',x:'Ngồi thư giãn ngắm biển, không vội.'},
+{id:'cfp',n:'Cà phê ven biển Tuy Hòa',a:'py',s:1,d:90,o:18,t:'Chill',x:'Bữa sáng nhẹ nhàng trước khi lên đường.'}
+];
+var AN={qn:'Quy Nhơn',py:'Phú Yên'},SL={1:'07:00',2:'11:30',3:'14:00',4:'18:30'};
+var S={sel:{},plan:[],notes:[],cust:0,share:false};
+var $=function(i){return document.getElementById(i)};
+function get(id){return P.filter(function(p){return p.id===id})[0]}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function save(){try{localStorage.setItem('lt',JSON.stringify({sel:S.sel,plan:S.plan,notes:S.notes,hotel:S.hotel,nights:S.nights,cust:S.cust,c:P.filter(function(p){return p.c})}))}catch(e){}}
+function load(){try{var j=JSON.parse(localStorage.getItem('lt')||'null');if(j){S.sel=j.sel||{};S.plan=j.plan||[];S.notes=j.notes||[];S.hotel=j.hotel||S.hotel;S.nights=j.nights||S.nights;S.cust=j.cust||0;(j.c||[]).forEach(function(c){P.push(c)})}}catch(e){}}
+function drawPicker(){
+  var h='';['qn','py'].forEach(function(a){
+    h+='<h3>'+AN[a]+'</h3><div class="chips">';
+    P.filter(function(p){return p.a===a}).sort(function(x,y){return x.o-y.o}).forEach(function(p){
+      h+='<button class="chip'+(S.sel[p.id]?' on':'')+'" data-id="'+p.id+'">'+esc(p.n)+' <small>'+p.t+'</small></button>'});
+    h+='</div>'});
+  $('pl').innerHTML=h;
+}
+function hm(m){var h=Math.floor(m/60),mm=m%60;return (h<10?'0':'')+h+':'+(mm<10?'0':'')+mm}
+function sched(ids){
+  var items=ids.map(get).filter(Boolean).sort(function(x,y){return x.s-y.s||(x.a===y.a?x.o-y.o:(x.a==='qn'?-1:1))});
+  var t=0,out=[],prev=null;
+  items.forEach(function(p){
+    var st=Math.max(t,parseInt(SL[p.s])*60+parseInt(SL[p.s].slice(3)));
+    if(prev&&prev.a!==p.a){out.push({tr:'🚗 Di chuyển '+AN[prev.a]+' → '+AN[p.a]+' (~2–2,5 giờ, khoảng 105 km)'});st=Math.max(st,t+150)}
+    out.push({p:p,st:st});t=st+p.d+15;prev=p});
+  return out;
+}
+function auto(){
+  var n=+$('nd').value,pc=+$('pace').value;
+  var ids=P.filter(function(p){return S.sel[p.id]}).sort(function(x,y){return x.a===y.a?x.o-y.o:(x.a==='qn'?-1:1)}).map(function(p){return p.id});
+  var per=Math.max(1,Math.min(pc,Math.ceil(ids.length/n)));
+  S.plan=[];S.notes=[];for(var i=0;i<n;i++)S.plan.push([]);
+  ids.forEach(function(id,i){S.plan[Math.min(n-1,Math.floor(i/per))].push(id)});
+  save();render();
+}
+function dateOf(i){var v=$('dt').value;if(!v)return '';var d=new Date(v+'T00:00:00');d.setDate(d.getDate()+i);return ' · '+d.toLocaleDateString('vi-VN',{weekday:'long',day:'numeric',month:'numeric'})}
+S.hotel={qn:'royal',py:'hv'};S.nights={qn:7,py:6};
+var H=[
+{id:'royal',c:'qn',n:'Royal Hotel & Healthcare Resort',p:899000,t:'Tầm trung · view biển',x:'Phòng sát biển, ban công riêng.'},
+{id:'sgqn',c:'qn',n:'Khách sạn Sài Gòn – Quy Nhơn',p:899000,t:'Tiết kiệm · trung tâm',x:'Có nhà hàng Seaview tầng 8.'},
+{id:'kyco',c:'qn',n:'KyCo Peninsula',p:1495000,t:'Nghỉ dưỡng',x:'Hồ bơi vô cực hướng biển, có buffet.'},
+{id:'anya',c:'qn',n:'ANYA Premier Hotel',p:0,t:'Cao cấp · 5 sao',x:'Ngay trung tâm, đối diện bãi biển.'},
+{id:'hyams',c:'qn',n:'Grand Hyams Hotel',p:0,t:'Cao cấp · 5 sao',x:'306 phòng, hồ bơi vô cực tầng 3 nhìn ra biển.'},
+{id:'hv',c:'py',n:'Hùng Vương Hotel',p:500000,t:'Tiết kiệm · có hồ bơi',x:'241 Hùng Vương, đối diện bãi biển Tuy Hòa.'},
+{id:'sala',c:'py',n:'Sala Tuy Hòa Beach Hotel',p:0,t:'Tầm trung · sát biển',x:'51 Độc Lập, sát bờ biển, có hồ bơi.'},
+{id:'coral',c:'py',n:'Coralina Hotel',p:0,t:'Tiết kiệm · gần biển',x:'Giữa trung tâm Tuy Hòa, cách bãi tắm khoảng 50 m.'},
+{id:'wink',c:'py',n:'Wink Hotel Tuy Hòa Beach',p:0,t:'Tầm trung',x:'01 Điện Biên Phủ, cách biển khoảng 300 m.'},
+{id:'rosa',c:'py',n:'Rosa Alba Resort & Villas',p:1300000,t:'Nghỉ dưỡng',x:'88 Lê Duẩn, có spa, chèo kayak.'}
+];
+function hot(id){return H.filter(function(h){return h.id===id})[0]}
+function fd(o){var v=$('dt').value;if(!v)return '';var d=new Date(v+'T00:00:00');d.setDate(d.getDate()+o);return d.getDate()+'/'+(d.getMonth()+1)}
+function vnd(n){return n.toLocaleString('vi-VN')+'đ'}
+function renderStay(){
+ var h='<h2 style="font-size:20px">🏨 Chỗ ở</h2>',tot=0,unk=0,off=0;
+ ['qn','py'].forEach(function(c){
+  var n=+S.nights[c]||0,sel=hot(S.hotel[c]);
+  h+='<h3>'+AN[c]+' · '+n+' đêm'+(fd(off)?' · '+fd(off)+' → '+fd(off+n):'')+'</h3>';
+  H.filter(function(x){return x.c===c&&(!S.share||x.id===S.hotel[c])}).forEach(function(x){
+   var on=x.id===S.hotel[c];
+   h+='<div class="it" style="grid-template-columns:1fr"><div><b>'+(on?'✅ ':'')+esc(x.n)+'<span class="tag">'+x.t+'</span></b><span>'+esc(x.x)+(x.p?' · từ '+vnd(x.p)+'/đêm':' · chưa có giá, hãy kiểm tra khi đặt')+'</span><div class="nop" style="margin-top:4px">';
+   if(!S.share)h+='<button class="chip'+(on?' on':'')+'" data-h="'+x.id+'">'+(on?'Đang chọn':'Chọn')+'</button> ';
+   h+='<a href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.n+' '+AN[c])+'" target="_blank" rel="noopener" style="color:var(--ac)">Bản đồ ↗</a></div></div></div>'});
+  if(!S.share)h+='<label>Số đêm ở '+AN[c]+'</label><input type="number" min="0" max="14" value="'+n+'" data-n="'+c+'" style="width:90px">';
+  if(sel){if(sel.p)tot+=sel.p*n;else unk++}
+  off+=n});
+ h+='<div class="tr" style="margin-top:12px">Ước tính tiền phòng (theo giá thấp nhất đã tìm thấy): <b>'+vnd(tot)+'</b>'+(unk?' + '+unk+' chỗ chưa có giá':'')+'. Giá chỉ để tham khảo, có thể khác vào cuối tháng 10; hãy kiểm tra giá và phòng trống khi đặt.</div>';
+ $('stay').innerHTML=h}
+function render(){renderStay();
+  var v=$('view'),h='<h2 style="font-size:22px;margin-bottom:2px">'+esc($('ttl').value)+'</h2>';
+  var tot=S.plan.reduce(function(s,d){return s+d.length},0);
+  if(!tot){v.innerHTML=h+'<div class="empty">Chọn địa điểm ở bên trái rồi bấm <b>Tạo lịch trình</b>, hoặc bấm <b>✨ Gợi ý sẵn</b>.</div>';return}
+  h+='<div style="color:var(--mu);margin-bottom:10px">'+S.plan.length+' ngày · '+tot+' điểm</div>';
+  S.plan.forEach(function(d,i){
+    h+='<div class="day"><h2><span>Ngày '+(i+1)+dateOf(i)+'</span></h2>'+(S.notes[i]?'<div class="tr">'+esc(S.notes[i])+'</div>':'');
+    if(!d.length)h+='<div class="empty">Ngày nghỉ / tự do</div>';
+    sched(d).forEach(function(r){
+      if(r.tr){h+='<div class="tr">'+r.tr+'</div>';return}
+      var p=r.p;
+      h+='<div class="it"><div class="tm">'+hm(r.st)+'</div><div><b>'+esc(p.n)+'<span class="tag">'+p.t+'</span></b><span>'+esc(p.x||'')+' · ~'+(p.d>=60?(p.d/60).toFixed(p.d%60?1:0)+' giờ':p.d+' phút')+'</span>';
+      if(!S.share){h+='<div class="nop"><select data-mv="'+p.id+'" data-from="'+i+'">';
+        for(var k=0;k<S.plan.length;k++)h+='<option value="'+k+'"'+(k===i?' selected':'')+'>Ngày '+(k+1)+'</option>';
+        h+='</select> <button class="x" data-rm="'+p.id+'" data-from="'+i+'">✕ Xoá</button></div>'}
+      h+='</div></div>'});
+    h+='</div>'});
+  h+='<div style="color:var(--mu);font-size:12px">Giờ chỉ mang tính gợi ý. Tháng 10–11 là mùa mưa bão ở miền Trung, biển có thể động và cano Kỳ Co có thể bị huỷ: hãy theo dõi dự báo và giờ mở cửa trước khi đi.</div>';
+  v.innerHTML=h;
+}
+function text(){
+  var s=$('ttl').value+'\n';
+  S.plan.forEach(function(d,i){s+='\nNGÀY '+(i+1)+dateOf(i)+'\n'+(S.notes[i]?'  ('+S.notes[i]+')\n':'');
+    sched(d).forEach(function(r){s+=r.tr?'  '+r.tr+'\n':'  '+hm(r.st)+'  '+r.p.n+'\n'})});
+  s+='\nCHỔ Ở\n';['qn','py'].forEach(function(c){var k=hot(S.hotel[c]);if(k)s+='  '+AN[c]+' ('+S.nights[c]+' đêm): '+k.n+'\n'});return s;
+}
+document.addEventListener('click',function(e){
+  var t=e.target.closest('button');if(!t)return;
+  if(t.dataset.h){S.hotel[hot(t.dataset.h).c]=t.dataset.h;save();renderStay();return}
+  if(t.dataset.id){S.sel[t.dataset.id]=!S.sel[t.dataset.id];drawPicker()}
+  if(t.dataset.rm){var d=S.plan[+t.dataset.from];d.splice(d.indexOf(t.dataset.rm),1);S.sel[t.dataset.rm]=false;save();drawPicker();render()}
+});
+document.addEventListener('change',function(e){
+  var t=e.target;if(t.dataset&&t.dataset.n){S.nights[t.dataset.n]=+t.value||0;save();renderStay();return}if(t.dataset&&t.dataset.mv){var f=S.plan[+t.dataset.from];f.splice(f.indexOf(t.dataset.mv),1);S.plan[+t.value].push(t.dataset.mv);save();render()}
+});
+$('gen').onclick=auto;
+$('ttl').oninput=$('dt').onchange=function(){render()};
+$('pre').onclick=function(){S.sel={};['bc','eg','kc','bx','gr','td','hs','bch','gd','md','ol','mcn','tn'].forEach(function(i){S.sel[i]=true});drawPicker();auto()};
+$('clr').onclick=function(){S.sel={};S.plan=[];save();drawPicker();render()};
+$('ca').onclick=function(){var n=$('cn').value.trim();if(!n)return;S.cust++;var id='c'+Date.now();P.push({id:id,n:n,a:'qn',s:+$('cs').value,d:60,o:50+S.cust,t:'Tự thêm',x:'Điểm do bạn thêm.',c:1});
+  var last=S.plan.length?S.plan.length-1:-1;S.sel[id]=true;if(last>=0)S.plan[last].push(id);$('cn').value='';save();drawPicker();render()};
+$('tg').onclick=function(){S.share=!S.share;$('m').className=S.share?'':'b';$('builder').hidden=S.share;$('tg').textContent=S.share?'✏️ Quay lại chỉnh sửa':'👁 Xem bản chia sẻ';render()};
+$('cp').onclick=function(){var o=$('out');o.value=text();o.hidden=false;o.select();try{navigator.clipboard.writeText(o.value)}catch(e){try{document.execCommand('copy')}catch(_){}}$('cp').textContent='✔ Đã sao chép (hoặc chọn văn bản bên dưới)'};
+$('pr').onclick=function(){try{window.print()}catch(e){}};
+function mau(q){
+var pl=[['hs'],['bc','eg','bx','gr'],['kc','hs'],[],['bc','td'],['nh','nc'],['bc','qt','cf'],['mcn','tn','mc'],['bch','bs','gd'],[],['vr','ol'],['bch','md'],[],['cfp']];
+var nt=['Đến Quy Nhơn, nhận phòng và nghỉ ngơi. Ở Quy Nhơn 7 đêm, không phải xê dịch.','','','Ngày nghỉ: ngủ nướng, bơi, spa, cà phê, đi dạo nhẹ.','','Ngày này cũng là ngày dự phòng: nếu Kỳ Co bị huỷ do biển động thì dời sang hôm nay.','','Di chuyển Quy Nhơn → Tuy Hòa (~105 km, 2–2,5 giờ), nhận phòng. Ở Phú Yên 6 đêm.','','Ngày nghỉ: nghỉ tại khách sạn/resort, ăn nhẹ.','','','Ngày nghỉ, cũng là dự phòng nếu mưa lớn.','Trả phòng, ăn sáng rồi về.'];
+S.sel={};pl.forEach(function(d){d.forEach(function(i){S.sel[i]=true})});
+S.plan=pl;S.notes=nt;S.nights={qn:7,py:6};$('nd').value='14';$('dt').value='2026-10-19';$('ttl').value='Quy Nhơn – Phú Yên 19/10 – 01/11';
+save();if(!q){drawPicker();render()}}
+$('mau').onclick=function(){mau()};
+load();if(!S.plan.length)mau(true);drawPicker();render();
+</script>
+</body>
+</html>
